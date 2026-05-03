@@ -1,3 +1,8 @@
+/*👉 Step 1: Customer Total Spending
+For each customer:
+		•	Show: 
+		o	CustomerId 
+		o	TotalSpent (sum of all invoices) */
 
 WITH customer_spending 
 		AS(
@@ -8,6 +13,15 @@ WITH customer_spending
 			GROUP BY CustomerId
 			),
 
+	/*👉 Step 2: Rank Customers
+		•	Rank customers based on TotalSpent (highest first) 
+	
+	👉 Step 3: Revenue Contribution %
+		For each customer:
+		•	Calculate: 
+		o	%Contribution = (Customer TotalSpent / Overall Total Revenue) * 100 
+	*/
+	
 	 Customer_Analysis AS(
 			SELECT 
 				CustomerId,
@@ -16,7 +30,12 @@ WITH customer_spending
 				TotalSpent/SUM(TotalSpent) OVER() *100 AS ContributionPercent
 
 			FROM customer_spending)
+	
+/*👉 Step 4: Running Contribution
+•	Calculate cumulative contribution (running %)
+Note: This helps identify top 20% customers (Pareto analysis) */
 
+	
 SELECT 
 	CustomerId,
 	TotalSpent,
